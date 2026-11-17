@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#650d19">
+<title>শুভ্রজিৎ ও স্বর্ণিকা — Wedding Invitation</title>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#31070d;color:#fff0d1;font-family:Georgia,serif}
+.cover{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;background:radial-gradient(circle,#8b1723,#31070d)}
+.cover img{display:block;width:min(100%,560px);max-height:78svh;object-fit:contain;box-shadow:0 12px 45px #160307aa}
+.open-wrap{text-align:center;padding:16px 12px 8px}
+button{border:1px solid #f4d995;background:linear-gradient(135deg,#f3d995,#c49342);color:#4b1018;padding:14px 25px;border-radius:999px;font:bold 16px Georgia,serif;cursor:pointer;box-shadow:0 5px 18px #17030766}
+.hint{font-size:13px;color:#f4dfb6;margin:10px}
+.letter{display:none;min-height:100svh;padding:36px 16px 60px;position:relative;overflow:hidden;background:linear-gradient(#590b18bb,#590b18bb),url('letter-background.jpg') center/cover fixed}
+.letter.show{display:block;animation:reveal 1s ease}
+@keyframes reveal{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.paper{position:relative;z-index:2;width:min(100%,650px);margin:20px auto;padding:34px 24px;background:#fff2d8;color:#64202a;border:5px double #c49a52;outline:1px solid #f4d995;outline-offset:5px;text-align:center;box-shadow:0 15px 45px #16030788}
+.paper .om{font-size:26px;color:#a77b34}
+.paper h1{font-size:clamp(29px,7vw,45px);font-weight:normal;margin:16px 0;color:#751c2b}
+.paper h2{font-size:23px;font-weight:normal;color:#9a6b2d}
+.paper p{line-height:1.85;font-size:17px}
+.names{font-size:24px;line-height:1.8;color:#761c2b}
+.meta{margin-top:22px;padding:15px;border-top:1px solid #c49a52;border-bottom:1px solid #c49a52}
+.flower{position:fixed;top:-35px;z-index:5;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translate3d(var(--drift),110vh,0) rotate(620deg)}}
+.musicbox{margin:22px auto 0;padding:16px;background:#f8e7c9;border:1px solid #c49a52;border-radius:12px;max-width:460px}
+.musicbox p{font-size:13px!important}
+footer{padding:25px;text-align:center;color:#ffe0a0}
+@media(max-width:420px){.paper{padding:27px 17px}.paper p{font-size:16px}}
+</style>
+</head>
+<body>
+<section class="cover" id="cover">
+  <img src="invitation-cover.jpg" alt="শুভ্রজিৎ ও স্বর্ণিকা wedding invitation">
+  <div class="open-wrap">
+    <button id="openBtn" type="button">Open the Letter ✉</button>
+    <div class="hint">A little message awaits you</div>
+  </div>
+</section>
+
+<section class="letter" id="letter">
+  <article class="paper">
+    <div class="om">॥ শুভ সূচনা ॥</div>
+    <h1>You're Invited!</h1>
+    <h2>With love and blessings</h2>
+    <p>With immense joy, our family invites you to celebrate the wedding of</p>
+    <div class="names">শুভ্রজিৎ দেবনাথ<br><span style="color:#a77b34">&</span><br>স্বর্ণিকা সাহা</div>
+    <div class="meta">
+      <h2>১৩ ডিসেম্বর ২০২৬</h2>
+      <p><strong>Wedding Celebration</strong><br>Ambassa, Our Home</p>
+    </div>
+    <p>Join us as two hearts begin a beautiful journey together.<br>Your presence and blessings will make our day truly special.</p>
+    <h2>সাদর আমন্ত্রণ</h2>
+    <p>With warm regards,<br>The Debnath &amp; Saha Families</p>
+
+    <div class="musicbox">
+      <h2>Wedding Song ♫</h2>
+      <p>The selected song starts from 0:17 when the letter opens and is set to end at 0:30. If autoplay is blocked, tap Play Song.</p>
+      <div id="playerWrap"></div>
+      <button id="musicBtn" type="button">Play Song ♫</button>
+    </div>
+  </article>
+  <footer>শুভ বিবাহ • Subhrajit &amp; Swarnika</footer>
+</section>
+
+<script>
+const openBtn=document.getElementById('openBtn');
+const letter=document.getElementById('letter');
+const cover=document.getElementById('cover');
+const playerWrap=document.getElementById('playerWrap');
+const musicBtn=document.getElementById('musicBtn');
+let flowerTimer=null;
+let songStarted=false;
+
+function dropFlower(){
+ const el=document.createElement('span');
+ el.className='flower';
+ el.textContent=['🌸','🌼','✿','❀'][Math.floor(Math.random()*4)];
+ el.style.left=(Math.random()*100)+'vw';
+ el.style.fontSize=(17+Math.random()*18)+'px';
+ el.style.setProperty('--drift',((Math.random()*140)-70)+'px');
+ const seconds=5+Math.random()*5;
+ el.style.animationDuration=seconds+'s';
+ document.body.appendChild(el);
+ setTimeout(()=>el.remove(),seconds*1000);
+}
+function startSong(){
+ playerWrap.innerHTML =
+  '<iframe width="100%" height="190" ' +
+  'src="https://www.youtube-nocookie.com/embed/u2XOyXN1Ppo?start=17&end=30&autoplay=1&playsinline=1&rel=0" ' +
+  'title="Wedding song" frameborder="0" ' +
+  'allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen ' +
+  'style="border:0;border-radius:10px"></iframe>';
+ songStarted=true;
+ musicBtn.textContent='Replay Song ♫';
+}
+openBtn.addEventListener('click',()=>{
+ cover.style.display='none';
+ letter.classList.add('show');
+ window.scrollTo({top:0,behavior:'smooth'});
+ for(let i=0;i<22;i++)setTimeout(dropFlower,i*90);
+ if(!flowerTimer)flowerTimer=setInterval(dropFlower,420);
+ startSong();
+});
+musicBtn.addEventListener('click',startSong);
+</script>
+</body>
+</html>
